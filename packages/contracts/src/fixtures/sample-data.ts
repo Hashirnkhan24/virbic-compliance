@@ -1,0 +1,205 @@
+import {
+  SiteSnapshot,
+  EvidenceRecord,
+  FindingRecord,
+  FreeScanPreview,
+  FullScanReport,
+} from "../index";
+
+export const sampleScanId = "4b4f6202-0941-47c3-a367-7597da4d4a82";
+export const sampleEvidenceId1 = "d940e797-0ec1-4ec9-8664-dfd4d8fc225b";
+export const sampleEvidenceId2 = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
+
+export const fixtureEvidenceRecord: EvidenceRecord = {
+  id: sampleEvidenceId1,
+  scanId: sampleScanId,
+  evidenceType: "header",
+  pageUrl: "https://example.com",
+  sourceLocator: "content-security-policy",
+  structuredValue: {
+    headerName: "content-security-policy",
+    headerValue: "default-src 'self'",
+    present: true,
+  },
+  contentHash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  observedAt: "2026-11-05T08:00:00.000Z",
+};
+
+export const fixtureSnapshot: SiteSnapshot = {
+  schemaVersion: "1.0.0",
+  scanId: sampleScanId,
+  canonicalOrigin: "https://example.com",
+  targetHost: "example.com",
+  capturedAt: "2026-11-05T08:00:00.000Z",
+  scannerVersion: "1.0.0",
+  pages: [
+    {
+      url: "https://example.com",
+      finalUrl: "https://example.com/",
+      httpStatus: 200,
+      pageType: "home",
+      title: "Example Website",
+      metaDescription: "An example launch site",
+      language: "en",
+      viewport: "width=device-width, initial-scale=1",
+      hasLoginForm: false,
+      hasPaymentForm: false,
+      hasContactForm: true,
+      loadDurationMs: 420,
+      capturedAt: "2026-11-05T08:00:01.000Z",
+    },
+  ],
+  cookies: [
+    {
+      name: "_ga",
+      domain: ".example.com",
+      path: "/",
+      httpOnly: false,
+      secure: true,
+      sameSite: "Lax",
+      isThirdParty: true,
+      observedScenario: "pre_consent",
+      redactedValueHash: "8f481a5c6974fa2e",
+    },
+  ],
+  networkRequests: [
+    {
+      id: "6e268a2d-b0ad-445a-9694-279092497673",
+      url: "https://www.google-analytics.com/analytics.js",
+      method: "GET",
+      resourceType: "script",
+      status: 200,
+      isThirdParty: true,
+      requestHeaders: [{ name: "User-Agent", value: "VibeRiskScanner/1.0" }],
+      responseHeaders: [{ name: "Content-Type", value: "application/javascript" }],
+      timestamp: "2026-11-05T08:00:02.000Z",
+    },
+  ],
+  responseHeaders: [
+    { name: "strict-transport-security", value: "max-age=31536000; includeSubDomains" },
+  ],
+  dns: {
+    resolvedIps: ["93.184.216.34"],
+    records: [{ type: "A", value: "93.184.216.34", ttl: 300 }],
+    spfRecord: "v=spf1 include:_spf.google.com ~all",
+    checkedAt: "2026-11-05T08:00:00.000Z",
+    hasDkimSignal: true,
+    isCloudflareOrCdn: false,
+  },
+  tls: {
+    valid: true,
+    issuer: "Let's Encrypt",
+    validFrom: "2026-01-01T00:00:00.000Z",
+    validTo: "2027-01-01T00:00:00.000Z",
+    daysRemaining: 60,
+    protocol: "TLSv1.3",
+    enforcesHttps: true,
+    hasMixedContentWarnings: false,
+  },
+  assets: [
+    {
+      url: "https://example.com/logo.png",
+      assetType: "image",
+      httpStatus: 200,
+      isBroken: false,
+      sizeBytes: 15420,
+      hasSri: false,
+      isWatermarkedSignal: false,
+    },
+  ],
+  consentRuns: {
+    noChoice: {
+      scenario: "no_choice",
+      status: "completed",
+      bannerDetected: true,
+      availableButtons: [],
+      cookiesBefore: [],
+      cookiesAfter: [],
+      cookiesSet: [],
+      storageItems: [],
+      networkRequests: [],
+      trackersFired: ["https://www.google-analytics.com/analytics.js"],
+      thirdPartyDomainsContacted: ["google-analytics.com"],
+      warnings: [],
+      executionDurationMs: 1200,
+    },
+  },
+  accessibilityViolations: [],
+  collectionWarnings: [],
+  incompleteStages: [],
+};
+
+export const fixtureFinding: FindingRecord = {
+  id: "8c949fef-c57a-4c28-97ff-2a544d673419",
+  scanId: sampleScanId,
+  checkId: "B2",
+  status: "issue_found",
+  severity: "high",
+  confidence: 1.0,
+  reasonCode: "PRE_CONSENT_TRACKER_FIRED",
+  title: "Third-party analytics script fired before consent choice",
+  summary: "Google Analytics was observed firing network requests during the unconsented fresh context.",
+  evidenceIds: [sampleEvidenceId1],
+  remediation: "Defer Google Analytics loading until the visitor grants explicit consent.",
+  exposureDetails: {
+    statutoryMaxInr: 2500000000,
+    plausibleDirectCostMinInr: 50000,
+    plausibleDirectCostMaxInr: 500000,
+    statutoryBasis: "Digital Personal Data Protection Act, 2023, Section 6",
+  },
+  requiresHumanReview: false,
+  createdAt: "2026-11-05T08:00:05.000Z",
+};
+
+export const fixtureFreePreview: FreeScanPreview = {
+  scanId: sampleScanId,
+  targetUrl: "https://example.com",
+  score: 84,
+  status: "completed",
+  scannerVersion: "1.0.0",
+  statusCounts: {
+    passed: 38,
+    issue_found: 2,
+    not_applicable: 1,
+    unable_to_verify: 0,
+  },
+  severityCounts: {
+    critical: 0,
+    high: 1,
+    medium: 1,
+    low: 0,
+  },
+  topFindings: [fixtureFinding],
+  exposureRange: {
+    hasExposure: true,
+    minDirectCostInr: 50000,
+    maxDirectCostInr: 500000,
+    statutoryMaxInr: 2500000000,
+    applicableRegimes: ["DPDP 2023"],
+  },
+  isPaid: false,
+  scannedAt: "2026-11-05T08:00:00.000Z",
+};
+
+export const fixtureFullReport: FullScanReport = {
+  scanId: sampleScanId,
+  targetUrl: "https://example.com",
+  score: 84,
+  status: "completed",
+  scannerVersion: "1.0.0",
+  rulesetVersion: "1.0.0",
+  isPaid: true,
+  findings: [fixtureFinding],
+  evidenceList: [fixtureEvidenceRecord],
+  exposureSummary: {
+    hasExposure: true,
+    minDirectCostInr: 50000,
+    maxDirectCostInr: 500000,
+    statutoryMaxInr: 2500000000,
+    applicableRegimes: ["DPDP 2023"],
+  },
+  pagesScanned: 1,
+  pdfDownloadUrl: "https://blob.vercel-storage.com/reports/example-com-scan.pdf",
+  scannedAt: "2026-11-05T08:00:00.000Z",
+  paidAt: "2026-11-05T08:05:00.000Z",
+};

@@ -1,0 +1,602 @@
+[
+  {
+    "checkId": "A1",
+    "title": "Privacy policy exists and is linked",
+    "detectorPath": "privacy/policy-discovery.ts",
+    "evidenceInput": "Pages, links, page text",
+    "method": "Deterministic",
+    "wave": "W1"
+  },
+  {
+    "checkId": "A2",
+    "title": "Policy covers data, purpose, retention",
+    "detectorPath": "privacy/policy-keyword-audit.ts",
+    "evidenceInput": "Privacy policy text",
+    "method": "Keywords/rules; AI refinement later",
+    "wave": "W2"
+  },
+  {
+    "checkId": "A3",
+    "title": "User rights explained",
+    "detectorPath": "privacy/rights-keyword-audit.ts",
+    "evidenceInput": "Privacy policy text",
+    "method": "Keywords for access/correction/deletion",
+    "wave": "W2"
+  },
+  {
+    "checkId": "A4",
+    "title": "Privacy contact / DPO",
+    "detectorPath": "privacy/privacy-contact.ts",
+    "evidenceInput": "Policy text, contact page",
+    "method": "Email/name/role patterns + context keywords",
+    "wave": "W2"
+  },
+  {
+    "checkId": "A5",
+    "title": "Policy matches reality",
+    "detectorPath": "privacy/policy-tracker-consistency.ts",
+    "evidenceInput": "Policy text + tracker inventory",
+    "method": "Keyword/domain comparison; avoid legal conclusion",
+    "wave": "W1"
+  },
+  {
+    "checkId": "A6",
+    "title": "Consent at data-collecting forms",
+    "detectorPath": "privacy/form-consent.ts",
+    "evidenceInput": "Forms, nearby DOM text, policy links",
+    "method": "DOM and text rules",
+    "wave": "W1"
+  },
+  {
+    "checkId": "A7",
+    "title": "Data deletion/correction route",
+    "detectorPath": "privacy/rights-route.ts",
+    "evidenceInput": "Policy links, forms, contact links",
+    "method": "Link discovery + keywords; not fulfilment test",
+    "wave": "W2"
+  },
+  {
+    "checkId": "A8",
+    "title": "Children's data and age gate",
+    "detectorPath": "privacy/children-scope.ts",
+    "evidenceInput": "Product/audience text, age gate/policy text",
+    "method": "AI judgement; paid, quote-verified",
+    "wave": "W3"
+  },
+  {
+    "checkId": "A9",
+    "title": "Cross-border transfer disclosure",
+    "detectorPath": "privacy/transfer-disclosure.ts",
+    "evidenceInput": "Policy text + third-party inventory",
+    "method": "Keyword rules; jurisdiction context",
+    "wave": "W2"
+  },
+  {
+    "checkId": "A10",
+    "title": "Do Not Sell/Share link",
+    "detectorPath": "privacy/opt-out-link.ts",
+    "evidenceInput": "Pages, links, opt-out destination",
+    "method": "Deterministic link detection for relevant profile",
+    "wave": "W1"
+  },
+  {
+    "checkId": "B1",
+    "title": "Cookie banner present",
+    "detectorPath": "cookies/banner-detection.ts",
+    "evidenceInput": "DOM, visible text, screenshot",
+    "method": "Deterministic UI heuristics",
+    "wave": "W1"
+  },
+  {
+    "checkId": "B2",
+    "title": "Trackers fire before consent",
+    "detectorPath": "cookies/pre-consent-trackers.ts",
+    "evidenceInput": "No-choice network/cookies + tracker DB",
+    "method": "Three-session experiment comparison",
+    "wave": "W1"
+  },
+  {
+    "checkId": "B3",
+    "title": "Reject as easy as Accept",
+    "detectorPath": "cookies/reject-prominence.ts",
+    "evidenceInput": "Banner DOM, button labels, geometry",
+    "method": "DOM heuristics; ambiguous => unable to verify",
+    "wave": "W1"
+  },
+  {
+    "checkId": "B4",
+    "title": "Reject really blocks trackers",
+    "detectorPath": "cookies/reject-effectiveness.ts",
+    "evidenceInput": "Reject session vs no-choice/accept runs",
+    "method": "Network/cookie diff",
+    "wave": "W1"
+  },
+  {
+    "checkId": "B5",
+    "title": "Cookie policy lists cookies",
+    "detectorPath": "cookies/cookie-policy-coverage.ts",
+    "evidenceInput": "Observed cookies + policy text",
+    "method": "Name/category/duration matching",
+    "wave": "W1"
+  },
+  {
+    "checkId": "B6",
+    "title": "Session replay/invasive tracking",
+    "detectorPath": "cookies/invasive-tracker-detection.ts",
+    "evidenceInput": "Scripts, domains, requests",
+    "method": "Tracker DB and patterns",
+    "wave": "W1"
+  },
+  {
+    "checkId": "B7",
+    "title": "Third-party resources leaking IPs",
+    "detectorPath": "cookies/external-resource-inventory.ts",
+    "evidenceInput": "External requests, resource types",
+    "method": "Deterministic inventory + disclosure cross-check",
+    "wave": "W1"
+  },
+  {
+    "checkId": "C1",
+    "title": "Image alt text",
+    "detectorPath": "accessibility/image-alt.ts",
+    "evidenceInput": "Rendered DOM images",
+    "method": "DOM/axe-core",
+    "wave": "W1"
+  },
+  {
+    "checkId": "C2",
+    "title": "Colour contrast",
+    "detectorPath": "accessibility/contrast.ts",
+    "evidenceInput": "Rendered styles and DOM",
+    "method": "axe-core",
+    "wave": "W1"
+  },
+  {
+    "checkId": "C3",
+    "title": "Keyboard access and visible focus",
+    "detectorPath": "accessibility/keyboard-focus.ts",
+    "evidenceInput": "Interactive DOM + controlled keyboard run",
+    "method": "axe-core + basic keyboard tests; expanded Wave 2",
+    "wave": "W1/W2"
+  },
+  {
+    "checkId": "C4",
+    "title": "Form labels and error messages",
+    "detectorPath": "accessibility/form-labels.ts",
+    "evidenceInput": "Inputs, labels, ARIA, validation DOM",
+    "method": "axe-core + DOM rules",
+    "wave": "W1"
+  },
+  {
+    "checkId": "C5",
+    "title": "Heading and landmark structure",
+    "detectorPath": "accessibility/heading-landmarks.ts",
+    "evidenceInput": "DOM tree",
+    "method": "axe-core + DOM rules",
+    "wave": "W1"
+  },
+  {
+    "checkId": "C6",
+    "title": "Page language, title, zoom",
+    "detectorPath": "accessibility/page-language.ts",
+    "evidenceInput": "HTML lang, title, viewport",
+    "method": "Deterministic",
+    "wave": "W1"
+  },
+  {
+    "checkId": "C7",
+    "title": "Buttons and links have names",
+    "detectorPath": "accessibility/accessible-names.ts",
+    "evidenceInput": "DOM accessible names",
+    "method": "axe-core",
+    "wave": "W1"
+  },
+  {
+    "checkId": "C8",
+    "title": "Accessibility statement",
+    "detectorPath": "accessibility/statement-discovery.ts",
+    "evidenceInput": "Pages and links",
+    "method": "Keyword/page discovery",
+    "wave": "W2"
+  },
+  {
+    "checkId": "C9",
+    "title": "Media captions and autoplay",
+    "detectorPath": "accessibility/media.ts",
+    "evidenceInput": "Video/audio elements, tracks, attributes",
+    "method": "DOM rules; caption quality not assessed",
+    "wave": "W1"
+  },
+  {
+    "checkId": "C10",
+    "title": "Touch target size and responsive",
+    "detectorPath": "accessibility/touch-targets.ts",
+    "evidenceInput": "Mobile viewport geometry, overflow",
+    "method": "DOM/browser measurements",
+    "wave": "W1"
+  },
+  {
+    "checkId": "D1",
+    "title": "Exposed API keys/secrets in JS",
+    "detectorPath": "security/secret-patterns.ts",
+    "evidenceInput": "Public JS bundles and inline scripts",
+    "method": "Regex, entropy, known prefixes; never validate/use keys",
+    "wave": "W1"
+  },
+  {
+    "checkId": "D2",
+    "title": "Exposed .env/.git/backups",
+    "detectorPath": "security/sensitive-paths.ts",
+    "evidenceInput": "HTTP responses for known paths",
+    "method": "Active request; ownership verification required",
+    "wave": "W2"
+  },
+  {
+    "checkId": "D3",
+    "title": "Open database signals",
+    "detectorPath": "security/database-exposure-signals.ts",
+    "evidenceInput": "Public config, known endpoints, verified tests",
+    "method": "Passive signal only in free scan; confirm only after verification",
+    "wave": "W2"
+  },
+  {
+    "checkId": "D4",
+    "title": "Open storage buckets",
+    "detectorPath": "security/storage-exposure.ts",
+    "evidenceInput": "Known public storage endpoints/listing responses",
+    "method": "Scoped active probe after ownership verification",
+    "wave": "W2"
+  },
+  {
+    "checkId": "D5",
+    "title": "HTTPS/TLS/mixed content",
+    "detectorPath": "security/transport-security.ts",
+    "evidenceInput": "TLS, redirects, mixed-content requests",
+    "method": "Deterministic",
+    "wave": "W1"
+  },
+  {
+    "checkId": "D6",
+    "title": "Security headers",
+    "detectorPath": "security/security-headers.ts",
+    "evidenceInput": "HTTP response headers",
+    "method": "Deterministic policy checks",
+    "wave": "W1"
+  },
+  {
+    "checkId": "D7",
+    "title": "Cookie security flags",
+    "detectorPath": "security/cookie-flags.ts",
+    "evidenceInput": "Set-Cookie headers",
+    "method": "Deterministic",
+    "wave": "W1"
+  },
+  {
+    "checkId": "D8",
+    "title": "Exposed admin/debug/API docs",
+    "detectorPath": "security/public-admin-docs.ts",
+    "evidenceInput": "Known paths and page discovery",
+    "method": "Scoped active requests after verification",
+    "wave": "W2"
+  },
+  {
+    "checkId": "D9",
+    "title": "Source maps exposed",
+    "detectorPath": "security/source-maps.ts",
+    "evidenceInput": "JS sourceMappingURL and .map response",
+    "method": "Passive reference fetch only; never explore beyond linked map",
+    "wave": "W1"
+  },
+  {
+    "checkId": "D10",
+    "title": "Vulnerable JS libraries",
+    "detectorPath": "security/js-vulnerability-match.ts",
+    "evidenceInput": "Script/package signatures and version DB",
+    "method": "Version matching against maintained advisory data",
+    "wave": "W2"
+  },
+  {
+    "checkId": "D11",
+    "title": "Login protection signals",
+    "detectorPath": "security/login-signals.ts",
+    "evidenceInput": "Login UI and visible controls",
+    "method": "Passive indicators only; no brute force",
+    "wave": "W2"
+  },
+  {
+    "checkId": "D12",
+    "title": "Sensitive data in frontend",
+    "detectorPath": "security/frontend-sensitive-data.ts",
+    "evidenceInput": "Rendered DOM, JS text, URLs",
+    "method": "Regex/secret patterns with redaction",
+    "wave": "W1"
+  },
+  {
+    "checkId": "D13",
+    "title": "CORS misconfiguration",
+    "detectorPath": "security/cors-check.ts",
+    "evidenceInput": "Response headers to controlled Origin",
+    "method": "Scoped active probe after ownership verification",
+    "wave": "W2"
+  },
+  {
+    "checkId": "D14",
+    "title": "Password reset security",
+    "detectorPath": "security/password-reset.ts",
+    "evidenceInput": "Authorised test account and reset flow",
+    "method": "Authenticated; defer",
+    "wave": "W4"
+  },
+  {
+    "checkId": "D15",
+    "title": "Access control/authorisation",
+    "detectorPath": "security/access-control.ts",
+    "evidenceInput": "Two authorised accounts and test resources",
+    "method": "Authenticated controlled test; defer",
+    "wave": "W4"
+  },
+  {
+    "checkId": "E1",
+    "title": "Terms and Conditions exist",
+    "detectorPath": "legal/terms-discovery.ts",
+    "evidenceInput": "Pages and links",
+    "method": "Deterministic",
+    "wave": "W1"
+  },
+  {
+    "checkId": "E2",
+    "title": "Refund/cancellation/shipping policy",
+    "detectorPath": "legal/refund-policy-discovery.ts",
+    "evidenceInput": "Pages, links, site commerce profile",
+    "method": "Deterministic presence/applicability",
+    "wave": "W1"
+  },
+  {
+    "checkId": "E3",
+    "title": "Business identity shown",
+    "detectorPath": "legal/business-identity.ts",
+    "evidenceInput": "Policy/contact/footer text",
+    "method": "Keyword/entity patterns; AI not required for MMP",
+    "wave": "W2"
+  },
+  {
+    "checkId": "E4",
+    "title": "Working contact channel",
+    "detectorPath": "legal/contact-channel.ts",
+    "evidenceInput": "Mailto, tel, form and links",
+    "method": "Presence/reachability; delivery not proven",
+    "wave": "W1"
+  },
+  {
+    "checkId": "E5",
+    "title": "Placeholder/template text",
+    "detectorPath": "legal/placeholder-text.ts",
+    "evidenceInput": "Extracted page text",
+    "method": "Regex and known placeholder phrases",
+    "wave": "W1"
+  },
+  {
+    "checkId": "E6",
+    "title": "High-risk advice disclaimers",
+    "detectorPath": "legal/high-risk-disclaimer.ts",
+    "evidenceInput": "Finance/health/legal content and disclaimers",
+    "method": "AI judgement, paid, quote-verified",
+    "wave": "W3"
+  },
+  {
+    "checkId": "E7",
+    "title": "Policy freshness and consistency",
+    "detectorPath": "legal/policy-freshness.ts",
+    "evidenceInput": "Policy dates and extracted statements",
+    "method": "Date/keyword consistency rules",
+    "wave": "W2"
+  },
+  {
+    "checkId": "F1",
+    "title": "Pricing transparency",
+    "detectorPath": "consumer/pricing-transparency.ts",
+    "evidenceInput": "Pricing blocks, currency, fees, tax text",
+    "method": "Keyword/rules; AI refinement later",
+    "wave": "W2"
+  },
+  {
+    "checkId": "F2",
+    "title": "Auto-renewal disclosure",
+    "detectorPath": "consumer/renewal-disclosure.ts",
+    "evidenceInput": "Pricing/trial/terms text",
+    "method": "Keyword/rules; skip if no subscription signal",
+    "wave": "W2"
+  },
+  {
+    "checkId": "F3",
+    "title": "Easy cancellation path",
+    "detectorPath": "consumer/cancellation-route.ts",
+    "evidenceInput": "Account/terms/help links and cancellation text",
+    "method": "Keyword/link discovery; ease is not fully automated",
+    "wave": "W2"
+  },
+  {
+    "checkId": "F4",
+    "title": "Dark patterns",
+    "detectorPath": "consumer/dark-pattern-signals.ts",
+    "evidenceInput": "DOM states, timers, preselected controls, scarcity text",
+    "method": "Rules first; AI only for ambiguous cases if later approved",
+    "wave": "W2"
+  },
+  {
+    "checkId": "F5",
+    "title": "Misleading claims",
+    "detectorPath": "consumer/claim-evidence.ts",
+    "evidenceInput": "Extracted marketing claims and context",
+    "method": "AI judgement, paid, quote-verified",
+    "wave": "W3"
+  },
+  {
+    "checkId": "F6",
+    "title": "Suspicious testimonials/reviews",
+    "detectorPath": "consumer/testimonial-patterns.ts",
+    "evidenceInput": "Review text, repeated phrases, image reuse",
+    "method": "AI judgement, paid; flag only, never label fake",
+    "wave": "W3"
+  },
+  {
+    "checkId": "F7",
+    "title": "Payment gateway signals",
+    "detectorPath": "consumer/payment-provider.ts",
+    "evidenceInput": "Checkout form actions, scripts, domains",
+    "method": "Provider/domain inventory; do not certify trust",
+    "wave": "W1"
+  },
+  {
+    "checkId": "G1",
+    "title": "Stock/watermarked images",
+    "detectorPath": "ip/watermark-signals.ts",
+    "evidenceInput": "Image URLs and selected image samples",
+    "method": "Basic deterministic watermark/known-stock signals only",
+    "wave": "W2"
+  },
+  {
+    "checkId": "G2",
+    "title": "Images with unclear licence",
+    "detectorPath": "ip/image-provenance.ts",
+    "evidenceInput": "Image URL, metadata, attribution text",
+    "method": "Provenance collection; unknown does not mean unlicensed",
+    "wave": "W2"
+  },
+  {
+    "checkId": "G3",
+    "title": "Open-source licence conflicts",
+    "detectorPath": "ip/repository-licences.ts",
+    "evidenceInput": "Repo, manifests, lockfiles, licence files",
+    "method": "Repository access; defer",
+    "wave": "W4"
+  },
+  {
+    "checkId": "G4",
+    "title": "Trademark/brand misuse",
+    "detectorPath": "ip/brand-use-review.ts",
+    "evidenceInput": "Brand names/logos and surrounding text",
+    "method": "AI judgement, paid, quote/evidence-backed",
+    "wave": "W3"
+  },
+  {
+    "checkId": "G5",
+    "title": "Copied content",
+    "detectorPath": "ip/text-similarity-api.ts",
+    "evidenceInput": "Extracted text and external reference corpus",
+    "method": "Paid external search/API; defer",
+    "wave": "W4"
+  },
+  {
+    "checkId": "G6",
+    "title": "Font and icon licences",
+    "detectorPath": "ip/font-icon-inventory.ts",
+    "evidenceInput": "Font requests, CSS, icon packages",
+    "method": "Known library/licence metadata; unknown status allowed",
+    "wave": "W1"
+  },
+  {
+    "checkId": "G7",
+    "title": "AI-generated content disclosure",
+    "detectorPath": "ip/ai-feature-disclosure.ts",
+    "evidenceInput": "AI feature/chatbot signals and disclosure text",
+    "method": "Keyword/rule detection; legal scope review",
+    "wave": "W2"
+  },
+  {
+    "checkId": "G8",
+    "title": "Visually duplicated images",
+    "detectorPath": "ip/reverse-image-api.ts",
+    "evidenceInput": "Image fingerprints and external image index",
+    "method": "Paid external API; defer",
+    "wave": "W4"
+  },
+  {
+    "checkId": "G9",
+    "title": "Third-party embedded media",
+    "detectorPath": "ip/embedded-media.ts",
+    "evidenceInput": "Iframes, video/audio embeds, provider domains",
+    "method": "Deterministic inventory",
+    "wave": "W1"
+  },
+  {
+    "checkId": "H1",
+    "title": "Broken links and 404s",
+    "detectorPath": "quality/broken-links.ts",
+    "evidenceInput": "Internal link targets and HTTP status",
+    "method": "Bounded HTTP checks",
+    "wave": "W1"
+  },
+  {
+    "checkId": "H2",
+    "title": "Email authentication SPF/DKIM/DMARC",
+    "detectorPath": "quality/email-auth-dns.ts",
+    "evidenceInput": "DNS TXT records and DKIM selector discovery",
+    "method": "DNS checks; selector discovery can be incomplete",
+    "wave": "W2"
+  },
+  {
+    "checkId": "H3",
+    "title": "Missing core pages",
+    "detectorPath": "quality/core-page-presence.ts",
+    "evidenceInput": "Navigation, page inventory, site profile",
+    "method": "Deterministic presence; applicability by site type",
+    "wave": "W1"
+  },
+  {
+    "checkId": "H4",
+    "title": "Mobile and performance basics",
+    "detectorPath": "quality/mobile-performance.ts",
+    "evidenceInput": "Mobile viewport, layout overflow, browser timing",
+    "method": "Playwright measurements; no Lighthouse in MMP",
+    "wave": "W1"
+  },
+  {
+    "checkId": "H5",
+    "title": "Broken images/assets",
+    "detectorPath": "quality/broken-assets.ts",
+    "evidenceInput": "Asset requests and response statuses",
+    "method": "Network capture",
+    "wave": "W1"
+  },
+  {
+    "checkId": "H6",
+    "title": "Form submission works",
+    "detectorPath": "quality/safe-form-test.ts",
+    "evidenceInput": "Form action/method and controlled test submission",
+    "method": "Only after ownership verification; safe test mode",
+    "wave": "W2"
+  },
+  {
+    "checkId": "H7",
+    "title": "Buttons and navigation work",
+    "detectorPath": "quality/interactions.ts",
+    "evidenceInput": "DOM controls and safe navigation actions",
+    "method": "Controlled browser interactions; avoid destructive actions",
+    "wave": "W1"
+  },
+  {
+    "checkId": "I1",
+    "title": "Third-party script inventory",
+    "detectorPath": "thirdparty/script-inventory.ts",
+    "evidenceInput": "Scripts and external network requests",
+    "method": "Deterministic inventory",
+    "wave": "W1"
+  },
+  {
+    "checkId": "I2",
+    "title": "Sensitive data sent to third parties",
+    "detectorPath": "thirdparty/payload-leak-signals.ts",
+    "evidenceInput": "Redacted request URL/headers/payload metadata",
+    "method": "Pattern detection; never persist raw submitted PII",
+    "wave": "W1"
+  },
+  {
+    "checkId": "I3",
+    "title": "Third-party script integrity and risk",
+    "detectorPath": "thirdparty/script-integrity.ts",
+    "evidenceInput": "Script tags, SRI, hostnames and version data",
+    "method": "Deterministic SRI/domain/version checks",
+    "wave": "W1"
+  }
+]

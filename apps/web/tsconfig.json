@@ -1,0 +1,42 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"],
+      "@vibe/contracts": ["../../packages/contracts/src/index.ts"],
+      "@vibe/db": ["../../packages/db/src/index.ts"],
+      "@vibe/capture": ["../../packages/capture/src/index.ts"],
+      "@vibe/detectors": ["../../packages/detectors/src/index.ts"],
+      "@vibe/rules": ["../../packages/rules/src/index.ts"],
+      "@vibe/exposure": ["../../packages/exposure/src/index.ts"],
+      "@vibe/fixes": ["../../packages/fixes/src/index.ts"],
+      "@vibe/reports": ["../../packages/reports/src/index.ts"],
+      "@vibe/ai": ["../../packages/ai/src/index.ts"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "**/__tests__/**", "**/*.test.ts"]
+}
